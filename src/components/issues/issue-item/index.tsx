@@ -1,4 +1,4 @@
-import { Chip, Tooltip } from "@nextui-org/react";
+import { Avatar, Chip, Tooltip } from "@nextui-org/react";
 import DottedCircle from "@/components/icons/dotted-circle";
 import { cn } from "@/common/utils/cn";
 import { GithubIssue } from "@/common/types/issues";
@@ -12,7 +12,16 @@ type Props = {
 };
 
 export default function IssueItem({ itemIndex, itemsLength, issue }: Props) {
-  const { title, number, user, created_at, labels, html_url, state } = issue;
+  const {
+    title,
+    number,
+    user,
+    created_at,
+    labels,
+    html_url,
+    state,
+    assignees,
+  } = issue;
   const { login: username } = user;
 
   const formattedDate = formatDistanceToNow(new Date(created_at), {
@@ -20,7 +29,7 @@ export default function IssueItem({ itemIndex, itemsLength, issue }: Props) {
   });
 
   return (
-    <a href={html_url}>
+    <a href={html_url} target="_blank">
       <div
         className={cn(
           "flex place-items-start bg-[#161b22] p-4 border border-[#30363d] hover:bg-[#2c3543]",
@@ -61,6 +70,18 @@ export default function IssueItem({ itemIndex, itemsLength, issue }: Props) {
             {`#${number}`} {state === "open" ? "opened" : "closed"}{" "}
             {formattedDate} by {username}
           </p>
+        </div>
+        <div className="ml-auto">
+          {assignees.map((assignee) => (
+            <a target="_blank" href={assignee.html_url} key={assignee.id}>
+              <Tooltip content={assignee.login}>
+                <Avatar
+                  src={assignee.avatar_url}
+                  className="w-6 h-6 text-tiny"
+                />
+              </Tooltip>
+            </a>
+          ))}
         </div>
       </div>
     </a>
