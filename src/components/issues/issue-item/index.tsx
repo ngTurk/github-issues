@@ -1,15 +1,26 @@
 import { Chip, Tooltip } from "@nextui-org/react";
 import DottedCircle from "@/components/icons/dotted-circle";
 import { cn } from "@/common/utils/cn";
+import { GithubIssue } from "@/common/types/issues";
+import { formatDistanceToNow } from "date-fns";
+import { hexToRgba } from "@/common/utils/hex-to-rgba";
 
 type Props = {
   itemIndex: number;
   itemsLength: number;
+  issue: GithubIssue;
 };
 
-export default function IssueItem({ itemIndex, itemsLength }: Props) {
+export default function IssueItem({ itemIndex, itemsLength, issue }: Props) {
+  const { title, number, user, created_at, labels, html_url, state } = issue;
+  const { login: username } = user;
+
+  const formattedDate = formatDistanceToNow(new Date(created_at), {
+    addSuffix: true,
+  });
+
   return (
-    <a href="">
+    <a href={html_url}>
       <div
         className={cn(
           "flex place-items-start bg-[#161b22] p-4 border border-[#30363d] hover:bg-[#2c3543]",
@@ -19,26 +30,37 @@ export default function IssueItem({ itemIndex, itemsLength }: Props) {
             "rounded-b-md border-b-1 border-b-[#30363d]"
         )}
       >
-        <DottedCircle fill="#1a7f37" />
+        <DottedCircle fill={state === "open" ? "#1a7f37" : "#A371F7"} />
         <div className="ml-2 flex flex-col">
           <h3 className="text-base font-semibold leading-none text-white">
-            Next 13.4.7 debugger in client code is not getting hit
+            {title}{" "}
+            {labels.map((label) => (
+              <span key={label.id} className="mr-1">
+                <Tooltip
+                  disableAnimation
+                  isDisabled={!label.description}
+                  content={label.description}
+                >
+                  <Chip
+                    className="h-5"
+                    size="sm"
+                    variant="bordered"
+                    style={{
+                      background: hexToRgba(label.color, 0.24),
+                      color: `#${label.color}`,
+                      borderColor: hexToRgba(label.color, 0.24),
+                    }}
+                  >
+                    {label.name}
+                  </Chip>
+                </Tooltip>
+              </span>
+            ))}
           </h3>
           <p className="text-xs text-gray-400">
-            #52073 opened on Jul 1 by raghavan-s-d
+            {`#${number}`} {state === "open" ? "opened" : "closed"}{" "}
+            {formattedDate} by {username}
           </p>
-        </div>
-        <div className="ml-1 flex">
-          <Tooltip content="Test">
-            <Chip
-              // className="text-white h-5"
-              size="sm"
-              variant="faded"
-              // style={{ background: "rgb(141, 172, 241)" }}
-            >
-              area: app
-            </Chip>
-          </Tooltip>
         </div>
       </div>
     </a>

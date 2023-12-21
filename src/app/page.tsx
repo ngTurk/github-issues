@@ -1,13 +1,9 @@
-import IssueItem from "@/components/issues/issue-item";
+import IssuesContainer from "@/containers/issues";
 
-export default function Home() {
-  const items = new Array(10).fill(2);
+import { getRepoIssuesData } from "@/common/api/issues";
 
-  return (
-    <section className="container mx-auto pt-10">
-      {items.map((value, i) => (
-        <IssueItem itemIndex={i} itemsLength={items.length} key={i} />
-      ))}
-    </section>
-  );
+export default async function Home() {
+  const repoIssues = await getRepoIssuesData();
+
+  return <IssuesContainer repoIssues={repoIssues} />;
 }
