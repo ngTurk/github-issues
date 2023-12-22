@@ -8,8 +8,30 @@ import {
 } from "@nextui-org/react";
 import { ArrowDown2 } from "iconsax-react";
 
+type SortingLabel = {
+  [key: string]: {
+    label: string;
+    key: string;
+  };
+};
+
 export default function SortDropdown() {
   const sortIssues = useIssuesStore((state) => state.sortIssues);
+
+  const sortingLabels: SortingLabel = {
+    creationDate: {
+      label: "Creation Date",
+      key: "creationDate",
+    },
+    comments: {
+      label: "Number of Comments",
+      key: "comments",
+    },
+    modifiedDate: {
+      label: "Modified Date",
+      key: "modifiedDate",
+    },
+  };
 
   /**
    * Handles the selection of a sorting criterion from a dropdown or similar UI element.
@@ -31,15 +53,14 @@ export default function SortDropdown() {
         variant="light"
         className="max-h-[400px] overflow-y-scroll"
       >
-        <DropdownItem onClick={() => handleSortSelection("creationDate")}>
-          Creation Date
-        </DropdownItem>
-        <DropdownItem onClick={() => handleSortSelection("comments")}>
-          Number of Comments
-        </DropdownItem>
-        <DropdownItem onClick={() => handleSortSelection("modifiedDate")}>
-          Modified Date
-        </DropdownItem>
+        {Object.keys(sortingLabels).map((label) => (
+          <DropdownItem
+            key={label}
+            onClick={() => handleSortSelection(sortingLabels[label].key)}
+          >
+            {sortingLabels[label].label}
+          </DropdownItem>
+        ))}
       </DropdownMenu>
     </Dropdown>
   );
