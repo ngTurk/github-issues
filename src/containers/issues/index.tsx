@@ -36,7 +36,7 @@ function IssuesContainer({ repoIssues, repoContributors, repoLabels }: Props) {
       <div
         className={cn(
           `
-            flex justify-end bg-[#161b22] p-4 border border-[#30363d]
+            flex bg-[#161b22] p-4 border border-[#30363d]
             hover:bg-[#2c3543] border-t-[#30363d] border-b-0 rounded-t-md
           `
         )}

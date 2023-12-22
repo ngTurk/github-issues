@@ -9,6 +9,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import { ArrowDown2, TickCircle } from "iconsax-react";
+import updateQueryParameter from "@/common/utils/update-query-parameter";
 
 export default function LabelsDropdown() {
   const { labels } = useIssuesStore();
@@ -26,25 +27,17 @@ export default function LabelsDropdown() {
 
   /**
    * Handles the click event on a label item in the dropdown.
-   *
-   * @param {string} label - The label that was clicked.
    */
-  const handleLabelClick = (label: string) => {
-    const newSelectedLabels = selectedLabels.includes(label)
-      ? selectedLabels.filter((l) => l !== label)
-      : [...selectedLabels, label];
-
-    setSelectedLabels(newSelectedLabels);
-
-    const newQueryParams = new URLSearchParams(searchParams);
-
-    if (newSelectedLabels.length > 0) {
-      newQueryParams.set("labels", newSelectedLabels.join(","));
-    } else {
-      newQueryParams.delete("labels");
-    }
-
-    router.push(`${pathname}?${newQueryParams}`, { scroll: false });
+  const handleLabelClick = (filterValue: string) => {
+    updateQueryParameter(
+      "labels",
+      filterValue,
+      selectedLabels,
+      setSelectedLabels,
+      pathname,
+      searchParams,
+      router.push
+    );
   };
 
   return (
