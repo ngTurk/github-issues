@@ -42,9 +42,13 @@ function IssuesContainer({ repoIssues, repoContributors, repoLabels }: Props) {
           `
         )}
       >
-        <AuthorsDropdown />
-        <LabelsDropdown />
-        <span className="border-l border-l-gray-600">
+        <span className="pr-1">
+          <AuthorsDropdown />
+        </span>
+        <span className="pr-1">
+          <LabelsDropdown />
+        </span>
+        <span className="border-l border-l-gray-600 pl-1">
           <SortDropdown />
         </span>
       </div>
