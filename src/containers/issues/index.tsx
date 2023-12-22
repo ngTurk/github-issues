@@ -8,6 +8,7 @@ import { cn } from "@/common/utils/cn";
 
 import AuthorsDropdown from "@/components/issues/filters/authors-dropdown";
 import LabelsDropdown from "@/components/issues/filters/labels-dropdown";
+import SortDropdown from "@/components/issues/sorting/sort-dropdown";
 
 type Props = {
   repoIssues: GithubIssue[];
@@ -43,6 +44,9 @@ function IssuesContainer({ repoIssues, repoContributors, repoLabels }: Props) {
       >
         <AuthorsDropdown />
         <LabelsDropdown />
+        <span className="border-l border-l-gray-600">
+          <SortDropdown />
+        </span>
       </div>
       {issues.map((issue, i) => (
         <IssueItem
