@@ -1,11 +1,13 @@
 import { create } from "zustand";
-import { GithubIssue, GithubUser } from "@/common/types/issues";
+import { GithubIssue, GithubLabel, GithubUser } from "@/common/types/issues";
 
 interface IssuesState {
   issues: GithubIssue[];
   setIssues: (issues: GithubIssue[]) => void;
   contributors: GithubUser[];
   setContributors: (contributors: GithubUser[]) => void;
+  labels: GithubLabel[];
+  setLabels: (labels: GithubLabel[]) => void;
 }
 
 export const useIssuesStore = create<IssuesState>((set) => ({
@@ -14,4 +16,7 @@ export const useIssuesStore = create<IssuesState>((set) => ({
 
   contributors: [],
   setContributors: (contributors) => set({ contributors }),
+
+  labels: [],
+  setLabels: (labels) => set({ labels }),
 }));

@@ -3,23 +3,33 @@
 import React, { useEffect } from "react";
 import { useIssuesStore } from "@/store/store";
 import IssueItem from "@/components/issues/issue-item";
-import { GithubIssue, GithubUser } from "@/common/types/issues";
+import { GithubIssue, GithubLabel, GithubUser } from "@/common/types/issues";
 import { cn } from "@/common/utils/cn";
 
 import AuthorsDropdown from "@/components/issues/filters/authors-dropdown";
+import LabelsDropdown from "@/components/issues/filters/labels-dropdown";
 
 type Props = {
   repoIssues: GithubIssue[];
   repoContributors: GithubUser[];
+  repoLabels: GithubLabel[];
 };
 
-function IssuesContainer({ repoIssues, repoContributors }: Props) {
-  const { issues, setIssues, setContributors } = useIssuesStore();
+function IssuesContainer({ repoIssues, repoContributors, repoLabels }: Props) {
+  const { issues, setIssues, setContributors, setLabels } = useIssuesStore();
 
   useEffect(() => {
     setIssues(repoIssues);
     setContributors(repoContributors);
-  }, [repoContributors, repoIssues, setContributors, setIssues]);
+    setLabels(repoLabels);
+  }, [
+    repoContributors,
+    repoIssues,
+    repoLabels,
+    setContributors,
+    setIssues,
+    setLabels,
+  ]);
 
   return (
     <section className="py-7 max-w-[1280px] mx-auto">
@@ -32,6 +42,7 @@ function IssuesContainer({ repoIssues, repoContributors }: Props) {
         )}
       >
         <AuthorsDropdown />
+        <LabelsDropdown />
       </div>
       {issues.map((issue, i) => (
         <IssueItem
