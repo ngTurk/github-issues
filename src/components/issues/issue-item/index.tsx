@@ -34,7 +34,6 @@ export default function IssueItem({ itemIndex, itemsLength, issue }: Props) {
         className={cn(
           "flex place-items-start bg-[#161b22] p-4 border border-[#30363d] hover:bg-[#2c3543]",
           "border-t-[#30363d] border-b-0",
-          itemIndex === 0 && "rounded-t-md",
           itemIndex === itemsLength - 1 &&
             "rounded-b-md border-b-1 border-b-[#30363d]"
         )}
