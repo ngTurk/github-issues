@@ -52,14 +52,20 @@ function IssuesContainer({ repoIssues, repoContributors, repoLabels }: Props) {
           <SortDropdown />
         </span>
       </div>
-      {issues.map((issue, i) => (
-        <IssueItem
-          issue={issue}
-          itemIndex={i}
-          itemsLength={issues.length}
-          key={issue.id}
-        />
-      ))}
+      {issues.length > 0 ? (
+        issues.map((issue, i) => (
+          <IssueItem
+            issue={issue}
+            itemIndex={i}
+            itemsLength={issues.length}
+            key={issue.id}
+          />
+        ))
+      ) : (
+        <div className="bg-[#161b22] p-4 border border-[#30363d] text-white">
+          No results matched your search.
+        </div>
+      )}
     </section>
   );
 }

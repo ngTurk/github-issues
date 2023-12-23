@@ -41,7 +41,7 @@ export default function LabelsDropdown() {
   };
 
   return (
-    <Dropdown>
+    <Dropdown isDisabled={labels.length === 0}>
       <DropdownTrigger>
         <Button color="default" variant="light" className="text-gray-300 gap-1">
           Labels <ArrowDown2 size="12" color="#d1d5db" variant="Bold" />
