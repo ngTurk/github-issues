@@ -1,5 +1,5 @@
 import IssuesContainer from "@/containers/issues";
-
+import { Metadata } from "next";
 import {
   getRepoIssuesData,
   getRepoContributors,
@@ -18,6 +18,16 @@ type PageParams = {
   params: Params;
   searchParams: SearchParams;
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  return {
+    title: `${params.author}/${params.repo} issues by ${params.createdBy}`,
+  };
+}
 
 export default async function Home({ params, searchParams }: PageParams) {
   const { author, repo, createdBy } = params;
