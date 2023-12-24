@@ -4,6 +4,7 @@ import { cn } from "@/common/utils/cn";
 import { GithubIssue } from "@/common/types/issues";
 import { formatDistanceToNow } from "date-fns";
 import { hexToRgba } from "@/common/utils/hex-to-rgba";
+import { issuesTestIds } from "@/common/constants/test-ids";
 
 type Props = {
   itemIndex: number;
@@ -29,7 +30,7 @@ export default function IssueItem({ itemIndex, itemsLength, issue }: Props) {
   });
 
   return (
-    <a href={html_url} target="_blank">
+    <a data-testid={issuesTestIds.issueItem} href={html_url} target="_blank">
       <div
         className={cn(
           "flex place-items-start bg-[#161b22] p-4 border border-[#30363d] hover:bg-[#2c3543]",
@@ -72,14 +73,9 @@ export default function IssueItem({ itemIndex, itemsLength, issue }: Props) {
         </div>
         <div className="ml-auto">
           {assignees.map((assignee) => (
-            <a target="_blank" href={assignee.html_url} key={assignee.id}>
-              <Tooltip content={assignee.login}>
-                <Avatar
-                  src={assignee.avatar_url}
-                  className="w-6 h-6 text-tiny"
-                />
-              </Tooltip>
-            </a>
+            <Tooltip key={assignee.id} content={assignee.login}>
+              <Avatar src={assignee.avatar_url} className="w-6 h-6 text-tiny" />
+            </Tooltip>
           ))}
         </div>
       </div>

@@ -14,7 +14,7 @@ interface IssuesState {
 export const useIssuesStore = create<IssuesState>((set) => ({
   issues: [],
   setIssues: (issues) => set({ issues }),
-  sortIssues: (sortKey) => {
+  sortIssues: (sortKey = "creationDate") => {
     set((state) => {
       let sortedIssues = [...state.issues];
       switch (sortKey) {

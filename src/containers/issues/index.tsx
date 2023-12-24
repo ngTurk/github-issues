@@ -9,6 +9,7 @@ import { cn } from "@/common/utils/cn";
 import AuthorsDropdown from "@/components/issues/filters/authors-dropdown";
 import LabelsDropdown from "@/components/issues/filters/labels-dropdown";
 import SortDropdown from "@/components/issues/sorting/sort-dropdown";
+import { issuesTestIds } from "@/common/constants/test-ids";
 
 type Props = {
   repoIssues: GithubIssue[];
@@ -53,16 +54,21 @@ function IssuesContainer({ repoIssues, repoContributors, repoLabels }: Props) {
         </span>
       </div>
       {issues.length > 0 ? (
-        issues.map((issue, i) => (
-          <IssueItem
-            issue={issue}
-            itemIndex={i}
-            itemsLength={issues.length}
-            key={issue.id}
-          />
-        ))
+        <div data-testid={issuesTestIds.issuesTable}>
+          {issues.map((issue, i) => (
+            <IssueItem
+              issue={issue}
+              itemIndex={i}
+              itemsLength={issues.length}
+              key={issue.id}
+            />
+          ))}
+        </div>
       ) : (
-        <div className="bg-[#161b22] p-4 border border-[#30363d] text-white">
+        <div
+          data-testid={issuesTestIds.noResult}
+          className="bg-[#161b22] p-4 border border-[#30363d] text-white"
+        >
           No results matched your search.
         </div>
       )}

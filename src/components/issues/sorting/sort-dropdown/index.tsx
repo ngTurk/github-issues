@@ -1,3 +1,4 @@
+import { issuesTestIds } from "@/common/constants/test-ids";
 import { useIssuesStore } from "@/store/store";
 import {
   Dropdown,
@@ -15,23 +16,23 @@ type SortingLabel = {
   };
 };
 
+export const sortingLabels: SortingLabel = {
+  creationDate: {
+    label: "Creation Date",
+    key: "creationDate",
+  },
+  comments: {
+    label: "Number of Comments",
+    key: "comments",
+  },
+  modifiedDate: {
+    label: "Modified Date",
+    key: "modifiedDate",
+  },
+};
+
 export default function SortDropdown() {
   const sortIssues = useIssuesStore((state) => state.sortIssues);
-
-  const sortingLabels: SortingLabel = {
-    creationDate: {
-      label: "Creation Date",
-      key: "creationDate",
-    },
-    comments: {
-      label: "Number of Comments",
-      key: "comments",
-    },
-    modifiedDate: {
-      label: "Modified Date",
-      key: "modifiedDate",
-    },
-  };
 
   /**
    * Handles the selection of a sorting criterion from a dropdown or similar UI element.
@@ -41,9 +42,14 @@ export default function SortDropdown() {
   };
 
   return (
-    <Dropdown>
+    <Dropdown data-testid={issuesTestIds.sortingDropdown}>
       <DropdownTrigger>
-        <Button color="default" variant="light" className="text-gray-300 gap-1">
+        <Button
+          data-testid={issuesTestIds.sortingDropdownButton}
+          color="default"
+          variant="light"
+          className="text-gray-300 gap-1"
+        >
           Sort <ArrowDown2 size="12" color="#d1d5db" variant="Bold" />
         </Button>
       </DropdownTrigger>
